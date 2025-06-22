@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Model } from "mongoose";
 
 export enum Genre {
   FICTION = 'FICTION',
@@ -20,4 +20,8 @@ export interface IBook extends Document {
   createdAt: Date;
   updatedAt: Date;
   updateAvailability(): Promise<void>;
+}
+
+export interface IBookModel extends Model<IBook> {
+  findAvailable(): Promise<IBook[]>;
 }

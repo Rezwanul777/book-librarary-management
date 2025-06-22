@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from 'mongoose';
-import { Genre, IBook } from './book.interface';
+import { Genre, IBook, IBookModel } from './book.interface';
 
 const bookSchema = new Schema<IBook>({
   title: {
@@ -68,6 +68,6 @@ bookSchema.post('save', function(doc) {
   console.log(`Book saved: ${doc.title} (${doc.copies} copies available)`);
 });
 
-const Book: Model<IBook> = mongoose.model<IBook>('Book', bookSchema);
+const Book: IBookModel = mongoose.model<IBook, IBookModel>('Book', bookSchema);
 
 export default Book;

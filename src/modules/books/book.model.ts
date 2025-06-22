@@ -1,6 +1,8 @@
 import mongoose, { Schema, Model } from 'mongoose';
 import { Genre, IBook, IBookModel } from './book.interface';
 
+type IBookDocument = IBook & Document;
+
 const bookSchema = new Schema<IBook>({
   title: {
     type: String,
@@ -44,11 +46,12 @@ const bookSchema = new Schema<IBook>({
   versionKey: false
 });
 
-// Instance method to update availability based on copies
-bookSchema.methods.updateAvailability = async function(): Promise<void> {
+
+bookSchema.methods.updateAvailability = function (): void {
   this.available = this.copies > 0;
-  await this.save();
 };
+
+
 
 // Static method to find available books
 bookSchema.statics.findAvailable = function() {
@@ -68,6 +71,7 @@ bookSchema.post('save', function(doc) {
   console.log(`Book saved: ${doc.title} (${doc.copies} copies available)`);
 });
 
-const Book: IBookModel = mongoose.model<IBook, IBookModel>('Book', bookSchema);
+ const Book: IBookModel = mongoose.model<IBook, IBookModel>('Book', bookSchema);
+
 
 export default Book;
